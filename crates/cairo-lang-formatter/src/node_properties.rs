@@ -532,7 +532,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         true,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -546,7 +546,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         false,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     if self.get_children(db).len() > 2 {
                         trailing_break_point.set_comma_if_broken();
                     }
@@ -562,7 +562,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         false,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -576,7 +576,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         false,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -590,7 +590,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         true,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -604,7 +604,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         false,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -618,7 +618,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         false,
                         true,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -632,7 +632,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         false,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -663,7 +663,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         false,
                         true,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -677,7 +677,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         false,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
@@ -691,7 +691,7 @@ impl<'a> SyntaxNodeFormat for SyntaxNode<'a> {
                         true,
                         false,
                     );
-                    let mut trailing_break_point = leading_break_point.clone();
+                    let mut trailing_break_point = leading_break_point;
                     trailing_break_point.set_comma_if_broken();
                     BreakLinePointsPositions::Both {
                         leading: leading_break_point,
