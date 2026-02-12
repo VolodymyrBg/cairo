@@ -177,7 +177,7 @@ pub enum BreakLinePointIndentation {
     NotIndented,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 /// Properties defining the behavior of a break line point.
 pub struct BreakLinePointProperties {
     /// Indicates that the break line point was added instead of an empty line in the code, which
@@ -459,7 +459,7 @@ impl LineBuilder {
             .iter()
             .filter_map(|child| {
                 if let LineComponent::BreakLinePoint(properties) = child {
-                    Some(properties.clone())
+                    Some(*properties)
                 } else {
                     None
                 }
@@ -863,23 +863,18 @@ pub enum BreakLinePointsPositions {
 
 impl BreakLinePointsPositions {
     pub fn new_symmetric(break_line_point_properties: BreakLinePointProperties) -> Self {
-        Self::Both {
-            leading: break_line_point_properties.clone(),
-            trailing: break_line_point_properties,
-        }
+        Self::Both { leading: break_line_point_properties, trailing: break_line_point_properties }
     }
     pub fn leading(&self) -> Option<BreakLinePointProperties> {
         match self {
-            Self::Leading(properties) | Self::Both { leading: properties, .. } => {
-                Some(properties.clone())
-            }
+            Self::Leading(properties) | Self::Both { leading: properties, .. } => Some(*properties),
             _ => None,
         }
     }
     pub fn trailing(&self) -> Option<BreakLinePointProperties> {
         match self {
             Self::Trailing(properties) | Self::Both { trailing: properties, .. } => {
-                Some(properties.clone())
+                Some(*properties)
             }
             _ => None,
         }
@@ -1050,7 +1045,7 @@ impl<'a> FormatterImpl<'a> {
                 && i % breaking_frequency == breaking_frequency - 1
                 && i < n_children - 1
             {
-                self.append_break_line_point(Some(properties.clone()));
+                self.append_break_line_point(Some(*properties));
             }
             self.empty_lines_allowance = allowed_empty_between;
         }
