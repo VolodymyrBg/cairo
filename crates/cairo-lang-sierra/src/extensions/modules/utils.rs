@@ -65,8 +65,7 @@ impl Range {
     pub fn from_type_info(ty_info: &TypeInfo) -> Result<Self, SpecializationError> {
         Ok(match (&ty_info.long_id.generic_id, &ty_info.long_id.generic_args[..]) {
             (id, []) if *id == Felt252Type::id() => {
-                let prime: BigInt = CAIRO_PRIME_BIGINT.clone();
-                Self::half_open(1 - &prime, prime)
+                Self::half_open(1 - &*CAIRO_PRIME_BIGINT, CAIRO_PRIME_BIGINT.clone())
             }
             (id, []) if *id == Uint8Type::id() => Self::closed(u8::MIN, u8::MAX),
             (id, []) if *id == Uint16Type::id() => Self::closed(u16::MIN, u16::MAX),
