@@ -1454,18 +1454,20 @@ fn lower_expr_loop<'db>(
             ..
         }) => {
             let var_id = lower_expr(ctx, builder, expr_id)?.as_var_usage(ctx, builder)?;
+            let into_iter_return_type =
+                db.concrete_function_signature(into_iter).unwrap().return_type;
             let into_iter_call = generators::Call {
                 function: into_iter.lowered(db),
                 inputs: vec![var_id],
                 coupon_input: None,
                 extra_ret_tys: vec![],
-                ret_tys: vec![db.concrete_function_signature(into_iter).unwrap().return_type],
+                ret_tys: vec![into_iter_return_type],
                 location: ctx.get_location(stable_ptr.untyped()),
             }
             .add(ctx, &mut builder.statements);
             let into_iter_var = into_iter_call.returns.into_iter().next().unwrap();
             let sem_var = LocalVariable {
-                ty: db.concrete_function_signature(into_iter).unwrap().return_type,
+                ty: into_iter_return_type,
                 is_mut: true,
                 id: extract_matches!(into_iter_member_path.base_var(), VarId::Local),
                 allow_unused: true, // Synthetic variables should never generate unused warnings.
