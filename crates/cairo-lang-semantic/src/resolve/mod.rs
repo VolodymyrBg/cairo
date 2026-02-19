@@ -2189,7 +2189,7 @@ impl<'db, 'a> Resolution<'db, 'a> {
 
         let ident = identifier.text(db);
 
-        if identifier.text(db).long(db) == SELF_TYPE_KW {
+        if ident.long(db) == SELF_TYPE_KW {
             return Err(self.diagnostics.report(identifier.stable_ptr(db), SelfMustBeFirst));
         }
 
