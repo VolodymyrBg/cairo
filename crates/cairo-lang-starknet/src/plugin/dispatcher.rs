@@ -142,6 +142,10 @@ pub fn handle_trait<'db>(
                 }
 
                 for param in params {
+                    let param_type =
+                        extract_matches!(param.type_clause(db), OptionTypeClause::TypeClause)
+                            .ty(db);
+
                     if param.is_ref_param(db) {
                         skip_generation = true;
 
@@ -153,16 +157,11 @@ pub fn handle_trait<'db>(
                             ),
                         ))
                     }
-                    if extract_matches!(param.type_clause(db), OptionTypeClause::TypeClause)
-                        .ty(db)
-                        .is_dependent_type(db, &[single_generic_param])
-                    {
+                    if param_type.is_dependent_type(db, &[single_generic_param]) {
                         skip_generation = true;
 
                         diagnostics.push(PluginDiagnostic::error(
-                            extract_matches!(param.type_clause(db), OptionTypeClause::TypeClause)
-                                .ty(db)
-                                .stable_ptr(db),
+                            param_type.stable_ptr(db),
                             format!(
                                 "`{INTERFACE_ATTR}` functions don't support parameters that \
                                  depend on the trait's generic param type."
@@ -179,9 +178,6 @@ pub fn handle_trait<'db>(
                         ))
                     }
 
-                    let param_type =
-                        extract_matches!(param.type_clause(db), OptionTypeClause::TypeClause)
-                            .ty(db);
                     let type_name = &param_type.as_syntax_node().get_text(db);
                     serialization_code.push(RewriteNode::interpolate_patched(
                         &formatdoc!(
