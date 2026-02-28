@@ -713,11 +713,7 @@ fn add_node_enum_definition<'db>(
             enum {node_type_name}$generic_args$ {{
                 "
         ),
-        &[
-            ("object_name".to_string(), RewriteNode::from_ast_trimmed(&enum_ast.name(db))),
-            ("generic_args".to_string(), args),
-        ]
-        .into(),
+        &[("generic_args".to_string(), args)].into(),
     ));
     for variant in enum_ast.variants(db).elements(db) {
         let concrete_node_members_type = storage_node_info.concrete_node_members_type(&variant);
@@ -783,19 +779,12 @@ fn add_node_enum_impl<'db>(
         } else {
             index + usize::from(default_index.is_none())
         };
-        let field_type = match variant.type_clause(db) {
-            ast::OptionTypeClause::Empty(_) => "()".to_string(),
-            ast::OptionTypeClause::TypeClause(tc) => {
-                tc.ty(db).as_syntax_node().get_text_without_trivia(db).to_string(db)
-            }
-        };
 
         builder.add_modified(RewriteNode::interpolate_patched(
             &storage_node_info.node_constructor_field_init_code(false, &variant),
             &[
                 ("object_name".to_string(), enum_name.clone()),
                 ("field_name".to_string(), RewriteNode::from_ast_trimmed(&variant.name(db))),
-                ("field_type".to_string(), RewriteNode::text(&field_type)),
                 ("field_index".to_string(), RewriteNode::text(&variant_selector.to_string())),
             ]
             .into(),
